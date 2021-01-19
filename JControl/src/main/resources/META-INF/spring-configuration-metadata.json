@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "jleo.jcontrol.interceptUrl",
+    "defaultValue": "/**"
+  },
+  {
+    "name": "jleo.jcontrol.loginPageUrl",
+    "defaultValue": "/login"
+  },
+  {
+    "name": "jleo.jcontrol.successUrl",
+    "defaultValue": "/index"
+  },
+  {
+    "name": "jleo.jcontrol.errorUrl",
+    "defaultValue": "/error"
+  },
+  {
+    "name": "jleo.jcontrol.adminPassword",
+    "defaultValue": "123456"
+  }
+]}

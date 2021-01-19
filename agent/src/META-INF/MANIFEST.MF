@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Premain-Class: com.example.aim.agent.bootstrap.Bootstrap
+Can-Redefine-Classes: true
