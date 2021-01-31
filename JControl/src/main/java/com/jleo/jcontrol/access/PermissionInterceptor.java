@@ -1,5 +1,6 @@
 package com.jleo.jcontrol.access;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author jleo
  * @date 2021/1/17
  */
+@Component
 public class PermissionInterceptor implements HandlerInterceptor {
 
     @Override

@@ -1,0 +1,14 @@
+jleo:
+  jcontrol:
+    successUrl: /index
+    errorUrl: /error
+    loginPageUrl: /login
+    adminPassword: 654321
+    interceptUrl: /**
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/aim
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver

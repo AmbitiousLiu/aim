@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
  * @date 2020/12/19
  */
 @Aspect
-@Component
 public class PermissionControl {
 
     @Pointcut("execution(@com.jleo.jcontrol.access.Permission * *.*(..))")

@@ -1,9 +1,12 @@
 package com.jleo.jcontrol.access;
 
+import org.springframework.stereotype.Component;
+
 import java.lang.annotation.*;
 
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.METHOD)
+@Component
 public @interface Permission {
     /**
      * 特定用户可通过

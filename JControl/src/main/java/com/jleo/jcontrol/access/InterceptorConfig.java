@@ -1,6 +1,6 @@
-package com.jleo.jcontrol.boot;
+package com.jleo.jcontrol.access;
 
-import com.jleo.jcontrol.access.PermissionInterceptor;
+import com.jleo.jcontrol.boot.JControlProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -18,6 +18,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new PermissionInterceptor()).addPathPatterns(jControlProperties.getInterceptUrl());
+        registry.addInterceptor(new PermissionInterceptor()).addPathPatterns();
     }
 }

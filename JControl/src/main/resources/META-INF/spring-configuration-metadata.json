@@ -1,22 +1,38 @@
 {"properties": [
   {
     "name": "jleo.jcontrol.interceptUrl",
-    "defaultValue": "/**"
+    "type": "java.lang.String",
+    "defaultValue": "/**",
+    "description": "在此地址下开启登录拦截"
   },
   {
     "name": "jleo.jcontrol.loginPageUrl",
-    "defaultValue": "/login"
+    "type": "java.lang.String",
+    "defaultValue": "/login",
+    "description": "登录页面的地址"
   },
   {
     "name": "jleo.jcontrol.successUrl",
-    "defaultValue": "/index"
+    "type": "java.lang.String",
+    "defaultValue": "/index",
+    "description": "登录成功页面的地址"
   },
   {
     "name": "jleo.jcontrol.errorUrl",
-    "defaultValue": "/error"
+    "type": "java.lang.String",
+    "defaultValue": "/error",
+    "description": "登录失败页面的地址"
   },
   {
     "name": "jleo.jcontrol.adminPassword",
-    "defaultValue": "123456"
+    "type": "java.lang.String",
+    "defaultValue": "123456",
+    "description": "admin默认账号的密码"
+  },
+  {
+    "name": "jleo.jcontrol.securityKey",
+    "type": "java.lang.String",
+    "defaultValue": "JohnnyLeoStudio",
+    "description": "加密时使用的密钥"
   }
 ]}

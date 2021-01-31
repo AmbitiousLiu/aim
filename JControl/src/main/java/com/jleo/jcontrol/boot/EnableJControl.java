@@ -1,5 +1,6 @@
 package com.jleo.jcontrol.boot;
 
+import com.jleo.jcontrol.access.InterceptorConfig;
 import com.jleo.jcontrol.access.PermissionControl;
 import org.springframework.context.annotation.Import;
 
@@ -14,6 +15,6 @@ import java.lang.annotation.Target;
  */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.TYPE)
-@Import({PermissionControl.class, InterceptorConfig.class})
+@Import({InterceptorConfig.class, PermissionControl.class})
 public @interface EnableJControl {
 }
