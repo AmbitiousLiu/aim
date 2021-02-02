@@ -37,22 +37,28 @@ public class MenuDaoImpl implements MenuDao {
     @Override
     public MenuDO selectMenuById(String id) {
         return jdbcTemplate.query(selectMenuById, new Object[]{id}, (ResultSet resultSet) -> {
-            return new MenuDO(){{
-                setId(resultSet.getString(1));
-                setName(resultSet.getString(2));
-                setAddress(resultSet.getString(3));
-            }};
+            if (resultSet.next()) {
+                return new MenuDO(){{
+                    setId(resultSet.getString(1));
+                    setName(resultSet.getString(2));
+                    setAddress(resultSet.getString(3));
+                }};
+            }
+            return null;
         });
     }
 
     @Override
     public RoleMenuDO selectRoleMenuByRole(String roleName) {
         return jdbcTemplate.query(selectRoleMenuByRole, new Object[]{roleName}, (ResultSet resultSet) -> {
-            return new RoleMenuDO(){{
-                setRoleName(resultSet.getString(1));
-                setHave(resultSet.getString(2));
-                setHaveNot(resultSet.getString(3));
-            }};
+            if (resultSet.next()) {
+                return new RoleMenuDO() {{
+                    setRoleName(resultSet.getString(1));
+                    setHave(resultSet.getString(2));
+                    setHaveNot(resultSet.getString(3));
+                }};
+            }
+            return null;
         });
     }
 

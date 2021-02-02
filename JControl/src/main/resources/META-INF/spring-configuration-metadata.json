@@ -6,33 +6,15 @@
     "description": "在此地址下开启登录拦截"
   },
   {
-    "name": "jleo.jcontrol.loginPageUrl",
+    "name": "jleo.jcontrol.loginUrl",
     "type": "java.lang.String",
     "defaultValue": "/login",
-    "description": "登录页面的地址"
-  },
-  {
-    "name": "jleo.jcontrol.successUrl",
-    "type": "java.lang.String",
-    "defaultValue": "/index",
-    "description": "登录成功页面的地址"
-  },
-  {
-    "name": "jleo.jcontrol.errorUrl",
-    "type": "java.lang.String",
-    "defaultValue": "/error",
-    "description": "登录失败页面的地址"
-  },
-  {
-    "name": "jleo.jcontrol.adminPassword",
-    "type": "java.lang.String",
-    "defaultValue": "123456",
-    "description": "admin默认账号的密码"
+    "description": "后端登录验证地址"
   },
   {
     "name": "jleo.jcontrol.securityKey",
     "type": "java.lang.String",
     "defaultValue": "JohnnyLeoStudio",
-    "description": "加密时使用的密钥"
+    "description": "加密时使用的密钥(自定义更安全)"
   }
 ]}

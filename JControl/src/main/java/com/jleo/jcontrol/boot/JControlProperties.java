@@ -9,22 +9,16 @@ public class JControlProperties {
 
     private String interceptUrl = "/**";
 
-    private String loginPageUrl = "/login";
-
-    private String successUrl = "/index";
-
-    private String errorUrl = "/error";
-
-    private String adminPassword = "123456";
+    private String loginUrl = "/login";
 
     private String securityKey = "JohnnyLeoStudio";
 
-    public String getLoginPageUrl() {
-        return loginPageUrl;
+    public String getLoginUrl() {
+        return loginUrl;
     }
 
-    public void setLoginPageUrl(String loginPageUrl) {
-        this.loginPageUrl = loginPageUrl;
+    public void setLoginUrl(String loginUrl) {
+        this.loginUrl = loginUrl;
     }
 
     public String getSecurityKey() {
@@ -41,37 +35,5 @@ public class JControlProperties {
 
     public void setInterceptUrl(String interceptUrl) {
         this.interceptUrl = interceptUrl;
-    }
-
-    public String getPageUrl() {
-        return loginPageUrl;
-    }
-
-    public void setPageUrl(String loginPageUrl) {
-        this.loginPageUrl = loginPageUrl;
-    }
-
-    public String getSuccessUrl() {
-        return successUrl;
-    }
-
-    public void setSuccessUrl(String successUrl) {
-        this.successUrl = successUrl;
-    }
-
-    public String getErrorUrl() {
-        return errorUrl;
-    }
-
-    public void setErrorUrl(String errorUrl) {
-        this.errorUrl = errorUrl;
-    }
-
-    public String getAdminPassword() {
-        return adminPassword;
-    }
-
-    public void setAdminPassword(String adminPassword) {
-        this.adminPassword = adminPassword;
     }
 }

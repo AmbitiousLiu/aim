@@ -17,13 +17,13 @@ public class RoleDaoImpl implements RoleDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private String selectRolesByUserId = "select * from user_role left join role on user_role.role_name = role.name where user_role.user_id = ?";
+    private String selectRolesByUserId = "select * from user_role where user_id = ?";
 
     @Override
     public List<RoleDO> getAllRoleByUserId(String userId) {
         return jdbcTemplate.query(selectRolesByUserId, new Object[]{userId}, (ResultSet resultSet, int i) -> {
             return new RoleDO(){{
-                setName(resultSet.getString(1));
+                setName(resultSet.getString(2));
             }};
         });
     }

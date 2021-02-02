@@ -1,10 +1,8 @@
 jleo:
   jcontrol:
-    successUrl: /index
-    errorUrl: /error
-    loginPageUrl: /login
-    adminPassword: 654321
+    loginUrl: /login
     interceptUrl: /**
+    securityKey: jleo
 
 spring:
   datasource:

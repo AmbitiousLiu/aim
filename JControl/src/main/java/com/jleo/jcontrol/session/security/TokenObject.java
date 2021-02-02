@@ -8,15 +8,25 @@ import java.util.Map;
  */
 public class TokenObject {
 
-    private Map<String, Object> message;
+    private Map<String, String> message;
+
+    private String userId;
 
     private Long time;
 
-    public Map<String, Object> getMessage() {
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Map<String, String> getMessage() {
         return message;
     }
 
-    public void setMessage(Map<String, Object> message) {
+    public void setMessage(Map<String, String> message) {
         this.message = message;
     }
 

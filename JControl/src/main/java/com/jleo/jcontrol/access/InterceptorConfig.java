@@ -16,8 +16,16 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Autowired
     private JControlProperties jControlProperties;
 
+    @Autowired
+    private PermissionInterceptor permissionInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new PermissionInterceptor()).addPathPatterns();
+        registry.addInterceptor(permissionInterceptor)
+                .addPathPatterns("/get")
+                //.addPathPatterns(jControlProperties.getInterceptUrl())
+                .excludePathPatterns("/error")
+                .excludePathPatterns("/favicon.ico")
+                .excludePathPatterns(jControlProperties.getLoginUrl());
     }
 }

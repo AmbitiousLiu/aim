@@ -37,6 +37,9 @@ public class MenuServiceImpl implements MenuService {
         Set<MenuDO> menuDOSet = new HashSet<>();
         for (RoleDO roleDO : roleDOList) {
             RoleMenuDO roleMenuDO = menuDao.selectRoleMenuByRole(roleDO.getName());
+            if (roleMenuDO == null) {
+                return null;
+            }
             if (StringUtils.isEmpty(roleMenuDO.getHave())) {
                 if (StringUtils.isEmpty(roleMenuDO.getHaveNot())) {
                     menuDOSet.addAll(menuDao.selectAllMenu());

@@ -4,13 +4,13 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @author jleo
  * @date 2021/1/19
  * @description used to control the session
  */
-@Component
 public interface Conversation {
 
     /**
@@ -26,7 +26,7 @@ public interface Conversation {
      * @param response
      * @return
      */
-    boolean signIn(HttpServletRequest request, HttpServletResponse response);
+    boolean signIn(HttpServletRequest request, HttpServletResponse response, String userId, Map<String, String> userInfo);
 
     /**
      * do logout
@@ -35,4 +35,10 @@ public interface Conversation {
      * @return
      */
     boolean signOut(HttpServletRequest request, HttpServletResponse response);
+
+    <T> T getObjectFromToken(HttpServletRequest request, String name, Class<T> clazz);
+
+    String getStringFromToken(HttpServletRequest request, String name);
+
+    String getUserId(HttpServletRequest request);
 }
