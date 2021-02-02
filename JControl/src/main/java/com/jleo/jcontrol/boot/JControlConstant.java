@@ -5,12 +5,13 @@ package com.jleo.jcontrol.boot;
  * @date 2021/1/25
  */
 public class JControlConstant {
+    // JControl
+    public static String JCONTROL_CONSOLE_NAME = "[JControl]";
+
     // cookie
     public static String COOKIE_TOKEN_NAME = "token";
 
-    public static String COOKIE_TOKEN_USER_ID = "userId";
-
-    public static Long COOKIE_EXPIRATION = 30 * 60 * 1000L;
+    public static int COOKIE_EXPIRATION = 30 * 60 * 1000;
 
     // menu
     public static String MENU_SEPARATOR = ",";

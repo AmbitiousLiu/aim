@@ -12,8 +12,6 @@ public class TokenObject {
 
     private String userId;
 
-    private Long time;
-
     public String getUserId() {
         return userId;
     }
@@ -28,13 +26,5 @@ public class TokenObject {
 
     public void setMessage(Map<String, String> message) {
         this.message = message;
-    }
-
-    public Long getTime() {
-        return time;
-    }
-
-    public void setTime(Long time) {
-        this.time = time;
     }
 }

@@ -2,6 +2,7 @@ package com.example.web.controller;
 
 import com.jleo.jcontrol.access.Permission;
 import com.jleo.jcontrol.bean.DO.RoleDO;
+import com.jleo.jcontrol.bean.VO.CodeResult;
 import com.jleo.jcontrol.boot.JControlProperties;
 import com.jleo.jcontrol.role.dao.RoleDao;
 import com.jleo.jcontrol.session.Conversation;
@@ -17,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
+
 public class Test {
 
     @Autowired
@@ -25,11 +27,17 @@ public class Test {
     @Autowired
     private Conversation conversation;
 
-    @Permission
     @RequestMapping("test")
     public String test(HttpServletRequest request, HttpServletResponse response) {
         List<RoleDO> list = roleDao.getAllRoleByUserId("123");
-        conversation.signIn(request, response, "2017110426", null);
+        //conversation.signIn(request, response, "2017110426", null);
         return "hello";
     }
+
+    @Permission(user = "2017110426", role = "123", pass = false)
+    @RequestMapping("test2")
+    public CodeResult test2() {
+        return new CodeResult("test2");
+    }
+
 }

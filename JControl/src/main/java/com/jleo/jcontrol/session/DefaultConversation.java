@@ -1,9 +1,11 @@
 package com.jleo.jcontrol.session;
 
 import com.google.gson.Gson;
+import com.jleo.jcontrol.bean.DO.RoleDO;
 import com.jleo.jcontrol.bean.Exception.JControlException;
 import com.jleo.jcontrol.boot.JControlConstant;
 import com.jleo.jcontrol.boot.JControlProperties;
+import com.jleo.jcontrol.role.service.RoleService;
 import com.jleo.jcontrol.session.cookie.JCookie;
 import com.jleo.jcontrol.session.security.Token;
 import com.jleo.jcontrol.session.security.TokenObject;
@@ -15,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +32,9 @@ public class DefaultConversation implements Conversation {
 
     @Autowired
     private Gson gson;
+
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public boolean isLogin(HttpServletRequest request) {
@@ -48,10 +54,6 @@ public class DefaultConversation implements Conversation {
             e.printStackTrace();
             return false;
         }
-        // check time
-        if (System.currentTimeMillis() - tokenObject.getTime() > JControlConstant.COOKIE_EXPIRATION) {
-            return false;
-        }
         // others
 
         return true;
@@ -61,13 +63,12 @@ public class DefaultConversation implements Conversation {
     public boolean signIn(HttpServletRequest request, HttpServletResponse response, String userId, Map<String, String> userInfo) {
         try {
             TokenObject tokenObject = new TokenObject();
-            tokenObject.setTime(System.currentTimeMillis());
             tokenObject.setUserId(userId);
             tokenObject.setMessage(userInfo);
             Cookie cookie = new Cookie(JControlConstant.COOKIE_TOKEN_NAME, token.createToken(gson.toJson(tokenObject)));
             cookie.setPath("/");
             //cookie.setDomain(request.getServerName() + ":" + request.getServerPort());
-            cookie.setMaxAge(JControlConstant.COOKIE_EXPIRATION.intValue());
+            cookie.setMaxAge(JControlConstant.COOKIE_EXPIRATION);
             response.addCookie(cookie);
             return true;
         } catch (Exception e) {
@@ -139,4 +140,5 @@ public class DefaultConversation implements Conversation {
         }
         return tokenObject.getUserId();
     }
+
 }

@@ -13,14 +13,14 @@ public @interface Permission {
      * 优先级：1
      * @return
      */
-    String user() default "";
+    String[] user() default {};
 
     /**
      * 特定角色的用户可通过
      * 优先级：2
      * @return
      */
-    String role() default "";
+    String[] role() default {};
 
     /**
      * 符合条件的用户是否可访问

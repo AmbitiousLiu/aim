@@ -11,6 +11,9 @@ import javax.servlet.http.Cookie;
 public interface JCookie {
 
     static Cookie getCookieByName(Cookie[] cookies, String name) {
+        if (cookies == null) {
+            return null;
+        }
         for (Cookie cookie : cookies) {
             if (cookie.getName() != null && cookie.getName().equals(name)) {
                 return cookie;

@@ -7,6 +7,7 @@ import com.jleo.jcontrol.bean.VO.MenuVO;
 import com.jleo.jcontrol.boot.JControlConstant;
 import com.jleo.jcontrol.menu.dao.MenuDao;
 import com.jleo.jcontrol.role.dao.RoleDao;
+import com.jleo.jcontrol.role.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,13 +22,13 @@ import java.util.stream.Collectors;
 @Service
 public class MenuServiceImpl implements MenuService {
     @Autowired
-    private RoleDao roleDao;
+    private RoleService roleService;
     @Autowired
     private MenuDao menuDao;
     @Override
     public List<MenuVO> getMenuByUser(String userId) {
         // get roles of this user
-        List<RoleDO> roleDOList = roleDao.getAllRoleByUserId(userId);
+        List<RoleDO> roleDOList = roleService.getRoleByUserId(userId);
 
         // get all menu of these roles have
         // if 'have' == null -> get all : get 'have'
