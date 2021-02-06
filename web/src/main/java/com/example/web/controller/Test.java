@@ -18,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
-
 public class Test {
 
     @Autowired
