@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import org.springframework.stereotype.Component;
 
+import java.net.UnknownHostException;
+
 /**
  * @author jleo
  * @date 2021/2/3

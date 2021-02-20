@@ -44,14 +44,7 @@ public class DefaultConversation implements Conversation {
             return false;
         }
         // check parse
-        TokenObject tokenObject = null;
-        try {
-            tokenObject = gson.fromJson(token.ParseToken(cookie.getValue()), TokenObject.class);
-            if (tokenObject == null) {
-                throw new JControlException("token解析失败");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (parseToken(cookie) == null) {
             return false;
         }
         // others
@@ -67,7 +60,7 @@ public class DefaultConversation implements Conversation {
             tokenObject.setMessage(userInfo);
             Cookie cookie = new Cookie(JControlConstant.COOKIE_TOKEN_NAME, token.createToken(gson.toJson(tokenObject)));
             cookie.setPath("/");
-            //cookie.setDomain(request.getServerName() + ":" + request.getServerPort());
+            cookie.setDomain(request.getServerName());
             cookie.setMaxAge(JControlConstant.COOKIE_EXPIRATION);
             response.addCookie(cookie);
             return true;
@@ -84,6 +77,7 @@ public class DefaultConversation implements Conversation {
             return true;
         }
         cookie.setMaxAge(0);
+        response.addCookie(cookie);
         return true;
     }
 
@@ -92,14 +86,8 @@ public class DefaultConversation implements Conversation {
         if (cookie == null) {
             return null;
         }
-        TokenObject tokenObject = null;
-        try {
-            tokenObject = gson.fromJson(token.ParseToken(cookie.getValue()), TokenObject.class);
-            if (tokenObject == null) {
-                throw new JControlException("token解析失败");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        TokenObject tokenObject = parseToken(cookie);
+        if (tokenObject == null) {
             return null;
         }
         return gson.fromJson(tokenObject.getMessage().get(name), clazz);
@@ -110,14 +98,8 @@ public class DefaultConversation implements Conversation {
         if (cookie == null) {
             return null;
         }
-        TokenObject tokenObject = null;
-        try {
-            tokenObject = gson.fromJson(token.ParseToken(cookie.getValue()), TokenObject.class);
-            if (tokenObject == null) {
-                throw new JControlException("token解析失败");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        TokenObject tokenObject = parseToken(cookie);
+        if (tokenObject == null) {
             return null;
         }
         return tokenObject.getMessage().get(name);
@@ -128,17 +110,28 @@ public class DefaultConversation implements Conversation {
         if (cookie == null) {
             return null;
         }
+        TokenObject tokenObject = parseToken(cookie);
+        if (tokenObject == null) {
+            return null;
+        }
+        return tokenObject.getUserId();
+    }
+
+    private TokenObject parseToken(Cookie cookie) {
         TokenObject tokenObject = null;
         try {
             tokenObject = gson.fromJson(token.ParseToken(cookie.getValue()), TokenObject.class);
             if (tokenObject == null) {
-                throw new JControlException("token解析失败");
+                // 重复解析
+                tokenObject = gson.fromJson(token.ParseToken(cookie.getValue()), TokenObject.class);
+                if (tokenObject == null) {
+                    throw new JControlException("token解析失败");
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            //e.printStackTrace();
         }
-        return tokenObject.getUserId();
+        return tokenObject;
     }
 
 }

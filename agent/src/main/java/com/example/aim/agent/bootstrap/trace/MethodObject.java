@@ -10,7 +10,9 @@ import java.util.List;
  */
 public class MethodObject {
 
-    private Method method;
+    private String methodName;
+
+    private Object[] allArguments;
 
     private Long startTime;
 
@@ -20,12 +22,20 @@ public class MethodObject {
 
     private final List<MethodObject> methodList = new ArrayList<>();
 
-    public Method getMethod() {
-        return method;
+    public String getMethodName() {
+        return methodName;
     }
 
-    public void setMethod(Method method) {
-        this.method = method;
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
+
+    public Object[] getAllArguments() {
+        return allArguments;
+    }
+
+    public void setAllArguments(Object[] allArguments) {
+        this.allArguments = allArguments;
     }
 
     public Long getStartTime() {

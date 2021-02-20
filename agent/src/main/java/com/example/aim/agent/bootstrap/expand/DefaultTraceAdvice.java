@@ -38,7 +38,8 @@ public class DefaultTraceAdvice implements ExpandAgent {
     @Advice.OnMethodEnter()
     public static void enter(@Advice.Origin("#t") String className, @Advice.Origin Method method, @Advice.AllArguments Object[] objects) {
         MethodObject methodObject = new MethodObject();
-        methodObject.setMethod(method);
+        methodObject.setMethodName(method.toString());
+        methodObject.setAllArguments(objects);
         methodObject.setStartTime(System.currentTimeMillis());
         TraceContext.getCurrentTraceObject().pushMethodObject(methodObject);
     }

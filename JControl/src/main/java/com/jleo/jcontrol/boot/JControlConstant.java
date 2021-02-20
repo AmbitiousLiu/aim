@@ -11,7 +11,7 @@ public class JControlConstant {
     // cookie
     public static String COOKIE_TOKEN_NAME = "token";
 
-    public static int COOKIE_EXPIRATION = 30 * 60 * 1000;
+    public static int COOKIE_EXPIRATION = 60 * 60;
 
     // menu
     public static String MENU_SEPARATOR = ",";
@@ -24,6 +24,8 @@ public class JControlConstant {
     public static String CODE_RESULT_SUCCESS_MESSAGE = "JControl成功返回";
 
     public static int CODE_RESULT_ERROR = -1;
+
+    public static int CODE_RESULT_NOT_LOGIN = 1;
 
     public static String CODE_RESULT_ERROR_MESSAGE = "JControl返回错误";
 }

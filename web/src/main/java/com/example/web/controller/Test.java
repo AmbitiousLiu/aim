@@ -29,7 +29,8 @@ public class Test {
     @RequestMapping("test")
     public String test(HttpServletRequest request, HttpServletResponse response) {
         List<RoleDO> list = roleDao.getAllRoleByUserId("123");
-        //conversation.signIn(request, response, "2017110426", null);
+        conversation.signIn(request, response, "2017110426", null);
+        //conversation.isLogin()
         return "hello";
     }
 

@@ -14,10 +14,10 @@ import java.security.NoSuchAlgorithmException;
  */
 @Component
 public class AESUtil {
-    private static final String defaultCharset = "UTF-8";
-    private static final String KEY_AES = "AES";
-    private static final String KEY_MD5 = "MD5";
-    private static MessageDigest md5Digest;
+    public static final String defaultCharset = "UTF-8";
+    public static final String KEY_AES = "AES";
+    public static final String KEY_MD5 = "MD5";
+    public static MessageDigest md5Digest;
     static {
         try {
             md5Digest = MessageDigest.getInstance(KEY_MD5);

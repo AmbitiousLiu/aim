@@ -21,10 +21,13 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new RootInterceptor())
+                .addPathPatterns("/**");
         registry.addInterceptor(permissionInterceptor)
                 .addPathPatterns(jControlProperties.getInterceptUrl())
                 .excludePathPatterns("/error")
                 .excludePathPatterns("/favicon.ico")
+                .excludePathPatterns("/jcontrol/isLogin")
                 .excludePathPatterns(jControlProperties.getLoginUrl());
     }
 }
