@@ -50,6 +50,7 @@ public class DefaultTraceAdvice implements ExpandAgent {
         methodObject.setTimeConsuming(System.currentTimeMillis() - methodObject.getStartTime());
         if (thrown != null) {
             TraceContext.getCurrentTraceObject().peekMethodObject().setThrowable(thrown);
+            TraceContext.getCurrentTraceObject().setNormal(false);
         }
         TraceContext.getCurrentTraceObject().popMethodObject();
         TraceContext.tryClearCurrentContext();

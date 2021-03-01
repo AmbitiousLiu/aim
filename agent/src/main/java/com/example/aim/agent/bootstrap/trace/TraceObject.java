@@ -12,6 +12,8 @@ public class TraceObject {
 
     MethodObject root;
 
+    boolean normal = true;
+
     Stack<MethodObject> stack = new Stack<>();
 
     public String getTraceId() {
@@ -28,6 +30,14 @@ public class TraceObject {
 
     public void setRoot(MethodObject root) {
         this.root = root;
+    }
+
+    public boolean isNormal() {
+        return normal;
+    }
+
+    public void setNormal(boolean normal) {
+        this.normal = normal;
     }
 
     public void pushMethodObject(MethodObject methodObject) {

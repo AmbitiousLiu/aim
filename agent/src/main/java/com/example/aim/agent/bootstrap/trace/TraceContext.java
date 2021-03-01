@@ -1,7 +1,9 @@
 package com.example.aim.agent.bootstrap.trace;
 
 import com.example.aim.agent.bootstrap.Kafka;
+import com.example.aim.agent.bootstrap.jvm.JvmStack;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.util.UUID;
@@ -31,7 +33,15 @@ public class TraceContext {
     public static void tryClearCurrentContext() {
         if (getCurrentTraceObject().stack.empty()) {
             TraceObject traceObject = threadLocal.get();
-            Kafka.producer.send(new ProducerRecord<String, String>(Kafka.KAFKA_TOPIC_TRACE, traceObject.getTraceId(), gson.toJson(traceObject.getRoot())));
+            JsonObject systemInfo = JvmStack.getSystemInfo();
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("traceId", traceObject.getTraceId());
+            jsonObject.addProperty("serverName", systemInfo.get("name").getAsString());
+            jsonObject.addProperty("time", traceObject.getRoot().getStartTime().toString());
+            jsonObject.addProperty("consume", traceObject.getRoot().getTimeConsuming().toString());
+            jsonObject.addProperty("normal", traceObject.isNormal());
+            jsonObject.addProperty("traceMessage", gson.toJson(traceObject.getRoot()));
+            Kafka.producer.send(new ProducerRecord<String, String>(Kafka.KAFKA_TOPIC_TRACE, traceObject.getTraceId(), jsonObject.toString()));
             threadLocal.remove();
         }
     }

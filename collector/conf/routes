@@ -5,3 +5,7 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
+GET     /index                      controllers.HomeController.test
+
+POST    /system/heartbeat           controllers.SystemController.heartbeat
+GET     /system/getBusinessServer   controllers.SystemController.getBusinessServer

@@ -1,6 +1,8 @@
 import com.google.inject.AbstractModule
 import message.{JvmReceiver, Kafka, TraceReceiver}
 
+import javax.inject.Inject
+
 /**
  * This class is a Guice module that tells Guice how to bind several
  * different types. This Guice module is created when the Play
@@ -20,7 +22,6 @@ class Module extends AbstractModule {
     jvmReceiver.start()
 
     Runtime.getRuntime.addShutdownHook(new Thread() {
-      println("123")
       override  def  run(): Unit = {
         traceReceiver.consumer.close()
         jvmReceiver.consumer.close()

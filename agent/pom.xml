@@ -32,6 +32,10 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.velopayments</groupId>
+            <artifactId>java-spring-resttemplate</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

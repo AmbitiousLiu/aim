@@ -4,14 +4,21 @@ import com.example.aim.agent.bootstrap.Kafka;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.Console;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.management.*;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -21,6 +28,34 @@ import java.util.concurrent.TimeUnit;
 public class JvmStack {
 
     private static final long MB = 1048576L;
+    private static URI urlRegister;
+    private static URI urlHeartbeat;
+    private static RestTemplate restTemplateRegister;
+    private static RestTemplate restTemplateHeartbeat;
+
+    static {
+        try {
+            urlRegister = new URI("http://localhost:9000/system/register");
+
+
+            restTemplateRegister = new RestTemplate(new SimpleClientHttpRequestFactory(){{
+                setConnectTimeout(60 * 1000);
+                setReadTimeout(60 * 1000);
+            }});
+
+            restTemplateHeartbeat = new RestTemplate(new SimpleClientHttpRequestFactory(){{
+                setConnectTimeout(3 * 1000);
+                setReadTimeout(3 * 1000);
+            }});
+
+            urlHeartbeat = new URI("http://localhost:9000/system/heartbeat");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     public static JsonObject getHeapMemoryUsage() {
         MemoryMXBean memory = ManagementFactory.getMemoryMXBean();
@@ -89,20 +124,38 @@ public class JvmStack {
     }
 
     public static void jvmTaskStart() {
-        // send system info once
+        // send register info once
+        JsonObject systemInfo = JvmStack.getSystemInfo();
+        try {
 
-        // send system other info foreach
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(new Runnable() {
-            public void run() {
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("time", String.valueOf(System.currentTimeMillis()));
-                jsonObject.add("systemLoadInfo", JvmStack.getSystemLoadInfo());
-                jsonObject.add("heapMemoryUsage", JvmStack.getHeapMemoryUsage());
-                jsonObject.add("nonHeapMemoryUsage", JvmStack.getNonHeapMemoryUsage());
-                jsonObject.add("gcInfo", JvmStack.getGCInfo());
-                Kafka.producer.send(new ProducerRecord<String, String>(Kafka.KAFKA_TOPIC_JVM, JvmStack.getSystemInfo().get("name").getAsString(), jsonObject.toString()));
-            }
-        }, 0, 5000, TimeUnit.MILLISECONDS);
+            ScheduledExecutorService scheduledExecutorService1 = Executors.newScheduledThreadPool(1);
+            scheduledExecutorService1.scheduleAtFixedRate(new Runnable() {
+                public void run() {
+                    // send heart beat foreach
+                    try {
+                        restTemplateHeartbeat.postForEntity(urlHeartbeat, systemInfo.toString(), Object.class);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    // send system other info foreach
+                    /*
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("id", String.valueOf(System.currentTimeMillis()));
+                    jsonObject.addProperty("serverName", systemInfo.get("name").getAsString());
+                    jsonObject.addProperty("systemLoadInfo", JvmStack.getSystemLoadInfo().toString());
+                    jsonObject.addProperty("heapMemoryUsage", JvmStack.getHeapMemoryUsage().toString());
+                    jsonObject.addProperty("nonHeapMemoryUsage", JvmStack.getNonHeapMemoryUsage().toString());
+                    jsonObject.addProperty("gcInfo", JvmStack.getGCInfo().toString());
+                    System.out.println(jsonObject);
+                    Kafka.producer.send(new ProducerRecord<String, String>(Kafka.KAFKA_TOPIC_JVM, systemInfo.get("name").getAsString(), jsonObject.toString()));
+                    */
+                }
+            }, 0, 5000, TimeUnit.MILLISECONDS);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

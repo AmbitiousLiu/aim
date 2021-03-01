@@ -7,6 +7,7 @@
         <module>agent</module>
         <module>web</module>
         <module>JControl</module>
+        <module>data</module>
     </modules>
     <groupId>com.example</groupId>
     <artifactId>aim</artifactId>
@@ -124,6 +125,22 @@
                 <groupId>org.apache.kafka</groupId>
                 <artifactId>kafka-clients</artifactId>
                 <version>0.11.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.velopayments</groupId>
+                <artifactId>java-spring-resttemplate</artifactId>
+                <version>2.14.87</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+                <version>2.1.14.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.18</version>
             </dependency>
         </dependencies>
 

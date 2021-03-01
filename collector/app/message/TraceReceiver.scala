@@ -1,5 +1,6 @@
 package message
 
+import data.service.TraceDataService
 import org.apache.kafka.clients.consumer.KafkaConsumer
 
 import java.util.Collections
@@ -12,6 +13,8 @@ class TraceReceiver extends Thread {
 
   val consumer = new KafkaConsumer[String, String](Kafka.consumerProperties)
 
+  val traceDataService = new TraceDataService()
+
   override def run(): Unit = {
     consumer.subscribe(Collections.singletonList("trace"))
     while (true) {
@@ -21,6 +24,7 @@ class TraceReceiver extends Thread {
         val record = iter.next()
         // save to database
         println(record.offset() + "--" + record.key() + "--" + record.value())
+        traceDataService.saveTraceInfo(record.value())
       }
       consumer.commitSync()
     }
