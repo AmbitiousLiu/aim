@@ -29,7 +29,6 @@ public class PermissionInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 前后端分离的验证
         if (!conversation.isLogin(request)) {
             returnFalse(response, "not logged in yet");
             return false;

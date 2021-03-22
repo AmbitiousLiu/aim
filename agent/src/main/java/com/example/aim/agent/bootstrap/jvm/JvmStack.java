@@ -139,7 +139,6 @@ public class JvmStack {
                     }
 
                     // send system other info foreach
-                    /*
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("id", String.valueOf(System.currentTimeMillis()));
                     jsonObject.addProperty("serverName", systemInfo.get("name").getAsString());
@@ -149,7 +148,6 @@ public class JvmStack {
                     jsonObject.addProperty("gcInfo", JvmStack.getGCInfo().toString());
                     System.out.println(jsonObject);
                     Kafka.producer.send(new ProducerRecord<String, String>(Kafka.KAFKA_TOPIC_JVM, systemInfo.get("name").getAsString(), jsonObject.toString()));
-                    */
                 }
             }, 0, 5000, TimeUnit.MILLISECONDS);
 

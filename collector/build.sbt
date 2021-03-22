@@ -14,7 +14,8 @@ libraryDependencies ++= Seq( jdbc , ehcache , ws , specs2 % Test , guice ,
   "org.apache.kafka" %% "kafka" % "0.11.0.0" ,
   "mysql" % "mysql-connector-java" % "8.0.22",
   "com.google.code.gson" % "gson" % "2.8.6",
-  "com.velopayments" % "java-spring-resttemplate" % "2.14.87"
+  "com.velopayments" % "java-spring-resttemplate" % "2.14.87",
+  "com.jcraft" % "jsch" % "0.1.54"
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  

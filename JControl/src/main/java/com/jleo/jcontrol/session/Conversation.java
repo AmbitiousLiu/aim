@@ -18,7 +18,7 @@ public interface Conversation {
      * @param request
      * @return
      */
-    boolean isLogin(HttpServletRequest request);
+    boolean isLogin(HttpServletRequest request) throws InterruptedException;
 
     /**
      * do login

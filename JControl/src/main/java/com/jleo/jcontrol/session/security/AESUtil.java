@@ -18,6 +18,7 @@ public class AESUtil {
     public static final String KEY_AES = "AES";
     public static final String KEY_MD5 = "MD5";
     public static MessageDigest md5Digest;
+    public static SecretKeySpec keySpec;
     static {
         try {
             md5Digest = MessageDigest.getInstance(KEY_MD5);
@@ -65,8 +66,10 @@ public class AESUtil {
             } else {
                 content = Base64.decodeBase64(data.getBytes());
             }
-            SecretKeySpec keySpec = new SecretKeySpec(md5Digest.digest(key.getBytes(defaultCharset))
-                    , KEY_AES);
+            if (keySpec == null) {
+                keySpec = new SecretKeySpec(md5Digest.digest(key.getBytes(defaultCharset))
+                        , KEY_AES);
+            }
             Cipher cipher = Cipher.getInstance(KEY_AES);// 创建密码器
             cipher.init(mode, keySpec);// 初始化
             byte[] result = cipher.doFinal(content);
@@ -76,8 +79,10 @@ public class AESUtil {
                 return new String(result, defaultCharset);
             }
         } catch (Exception e) {
+            //e.printStackTrace();
+            keySpec = null;
+            return null;
         }
-        return null;
     }
 
 }

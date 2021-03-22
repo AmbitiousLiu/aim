@@ -1,10 +1,11 @@
 package controllers
 
-import data.dao.ScalaApplicationDatabase
+import data.dao.TaskDao
 import play.api.http.Writeable
 
 import javax.inject._
 import play.api.mvc._
+import service.TaskService
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -13,8 +14,9 @@ import scala.concurrent.{ExecutionContext, Future}
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents, ss: ScalaApplicationDatabase) extends AbstractController(cc) {
+class HomeController @Inject()(cc: ControllerComponents, taskService: TaskService) extends AbstractController(cc) {
 
+  val task: Future[Unit] = taskService.initTask()
   /**
    * Create an Action to render an HTML page with a welcome message.
    * The configuration in the `routes` file means that this method
@@ -23,11 +25,5 @@ class HomeController @Inject()(cc: ControllerComponents, ss: ScalaApplicationDat
    */
   def index: Action[AnyContent] = Action {
     Ok(views.html.index())
-
-  }
-
-  def test: Action[AnyContent] = Action {
-    ss.updateSomething()
-    Ok("")
   }
 }

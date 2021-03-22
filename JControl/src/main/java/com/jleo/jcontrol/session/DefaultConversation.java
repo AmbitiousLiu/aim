@@ -7,6 +7,7 @@ import com.jleo.jcontrol.boot.JControlConstant;
 import com.jleo.jcontrol.boot.JControlProperties;
 import com.jleo.jcontrol.role.service.RoleService;
 import com.jleo.jcontrol.session.cookie.JCookie;
+import com.jleo.jcontrol.session.security.DefaultToken;
 import com.jleo.jcontrol.session.security.Token;
 import com.jleo.jcontrol.session.security.TokenObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +46,9 @@ public class DefaultConversation implements Conversation {
         }
         // check parse
         if (parseToken(cookie) == null) {
-            return false;
+
         }
         // others
-
         return true;
     }
 
@@ -122,11 +122,7 @@ public class DefaultConversation implements Conversation {
         try {
             tokenObject = gson.fromJson(token.ParseToken(cookie.getValue()), TokenObject.class);
             if (tokenObject == null) {
-                // 重复解析
-                tokenObject = gson.fromJson(token.ParseToken(cookie.getValue()), TokenObject.class);
-                if (tokenObject == null) {
-                    throw new JControlException("token解析失败");
-                }
+                throw new JControlException("token解析失败");
             }
         } catch (Exception e) {
             //e.printStackTrace();

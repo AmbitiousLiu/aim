@@ -21,7 +21,7 @@ public class LoginController {
     private Conversation conversation;
 
     @RequestMapping("jcontrol/isLogin")
-    public CodeResult isLogin(HttpServletRequest request, HttpServletResponse response) {
+    public CodeResult isLogin(HttpServletRequest request, HttpServletResponse response) throws InterruptedException {
         if (conversation.isLogin(request)) {
             return new CodeResult();
         }
