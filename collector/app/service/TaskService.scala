@@ -19,7 +19,7 @@ import scala.concurrent.{ExecutionContext, Future}
  * @date 2021/3/8
  */
 @Singleton
-class TaskService @Inject() (ws: WSClient, taskDao: TaskDao)(implicit ec: ExecutionContext) {
+class TaskService @Inject() (ws: WSClient, taskDao: TaskDao, alarmService: AlarmService)(implicit ec: ExecutionContext) {
 
   val shellUtil = new ShellUtil()
 
@@ -30,7 +30,7 @@ class TaskService @Inject() (ws: WSClient, taskDao: TaskDao)(implicit ec: Execut
         scheduledExecutorService.scheduleAtFixedRate(new Runnable {
           override def run(): Unit = {
             print(shellTask.id + "begin")
-            sendShellResult(shellTask.id, shellUtil.execute(shellTask.shellTask.ip,
+            sendShellResult(shellTask, shellUtil.execute(shellTask.shellTask.ip,
               shellTask.shellTask.port.toInt,
               shellTask.shellTask.userName,
               shellTask.shellTask.password,
@@ -45,9 +45,9 @@ class TaskService @Inject() (ws: WSClient, taskDao: TaskDao)(implicit ec: Execut
             print(httpTask.id + "begin")
             ws.url(httpTask.url).get().thenApplyAsync(response => {
               if ((response.getStatus / 100) == 2) {
-                sendHttpResult(httpTask.id, "0")
+                sendHttpResult(httpTask, "0")
               } else {
-                sendHttpResult(httpTask.id, "1")
+                sendHttpResult(httpTask, "1")
               }
               return Ok
             })
@@ -68,17 +68,19 @@ class TaskService @Inject() (ws: WSClient, taskDao: TaskDao)(implicit ec: Execut
     })
   }
 
-  def sendShellResult(id: String, value: String): Unit = {
+  def sendShellResult(shellTask: ShellTaskDTO, value: String): Unit = {
+    alarmService.verifyTask(shellTask, value)
     val json = Json.newObject()
-      .put("id", id)
+      .put("id", shellTask.id)
       .put("value", value)
       .put("time", System.currentTimeMillis().toString)
     sendResult(json)
   }
 
-  def sendHttpResult(id: String, value: String): Unit = {
+  def sendHttpResult(httpTask: HttpTaskDTO, value: String): Unit = {
+    alarmService.verifyTask(httpTask, value)
     val json = Json.newObject()
-      .put("id", id)
+      .put("id", httpTask.id)
       .put("value", value)
       .put("time", System.currentTimeMillis().toString)
     sendResult(json)

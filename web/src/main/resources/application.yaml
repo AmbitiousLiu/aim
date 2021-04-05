@@ -3,7 +3,7 @@ server:
 
 jleo:
   jcontrol:
-    loginUrl: /login
+    loginUrl: /login,/push/*
     interceptUrl: /**
     securityKey: jleo
 

@@ -1,8 +1,14 @@
 package com.example.demo.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author jleo
@@ -12,9 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class Test {
     @Autowired
     Test2 test2;
+    @Autowired
+    Gson gson;
+    SystemController systemController = new SystemController();
     @RequestMapping("test")
-    public String test() {
+    public String test(@RequestBody String string) {
         //System.out.println("test");
+        systemController.heartbeat(string);
         try {
             test2.get("pertest", 1);
             test2.get("pertest", 1);

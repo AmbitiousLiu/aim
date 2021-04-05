@@ -28,6 +28,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/error")
                 .excludePathPatterns("/favicon.ico")
                 .excludePathPatterns("/jcontrol/isLogin")
-                .excludePathPatterns(jControlProperties.getLoginUrl());
+                .excludePathPatterns(jControlProperties.getLoginUrl().split(","));
     }
 }

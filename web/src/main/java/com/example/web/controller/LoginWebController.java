@@ -43,6 +43,11 @@ public class LoginWebController {
         return new CodeResult(loginService.getUserName(conversation.getUserId(request)));
     }
 
+    @RequestMapping("/getUserId")
+    public CodeResult getUserId(HttpServletRequest request) {
+        return new CodeResult(conversation.getUserId(request));
+    }
+
     @RequestMapping("/logout")
     public CodeResult logout(HttpServletRequest request, HttpServletResponse response) {
         return new CodeResult(conversation.signOut(request, response));

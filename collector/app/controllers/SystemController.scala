@@ -1,27 +1,31 @@
 package controllers
 
+import akka.actor.ActorSystem
 import com.google.gson.{Gson, JsonArray}
+import play.api.libs.concurrent.CustomExecutionContext
 import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
 
 import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  * @author jleo
  * @date 2021/2/20
  */
 @Singleton
-class SystemController @Inject() (cc: ControllerComponents, gson: Gson) extends AbstractController(cc) {
+class SystemController @Inject() (myExecutionContext: ExecutionContext, cc: ControllerComponents, gson: Gson) extends AbstractController(cc) {
 
   var businessServerMap: Map[String, BusinessServer] = Map[String, BusinessServer]()
 
-  def heartbeat: Action[AnyContent] = Action { request =>
-    val businessServer = BusinessServer(gson.fromJson(request.body.asText.get, classOf[BusinessServerInfo]))
-    if (businessServerMap.getOrElse(businessServer.serverInfo.name, null) == null) {
-      businessServerMap += (businessServer.serverInfo.name -> businessServer)
-    } else {
-      businessServerMap(businessServer.serverInfo.name).beat()
-    }
-    Ok("")
+  def heartbeat: Action[AnyContent] = Action.async { request =>
+    Future{ val businessServer = BusinessServer(gson.fromJson(request.body.asText.get, classOf[BusinessServerInfo]))
+      if (businessServerMap.getOrElse(businessServer.serverInfo.name, null) == null) {
+        businessServerMap += (businessServer.serverInfo.name -> businessServer)
+      } else {
+        businessServerMap(businessServer.serverInfo.name).beat()
+      }
+      Ok("")
+    }(myExecutionContext)
   }
 
   def getBusinessServer: Action[AnyContent] = Action {

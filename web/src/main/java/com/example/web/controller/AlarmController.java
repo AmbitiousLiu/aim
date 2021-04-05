@@ -4,15 +4,19 @@ import com.example.web.DO.Alarm;
 import com.example.web.VO.AlarmType;
 import com.example.web.VO.AlarmVO;
 import com.example.web.mapper.AlarmMapper;
+import com.example.web.socket.WebSocketServer;
 import com.google.gson.Gson;
 import com.jleo.jcontrol.bean.VO.CodeResult;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -50,6 +54,12 @@ public class AlarmController {
     @RequestMapping("/addAlarm")
     public CodeResult addAlarm(Alarm alarm) {
         return alarmMapper.insert(alarm) == 1 ? new CodeResult("新增成功！") : new CodeResult("新增失败！");
+    }
+
+    @RequestMapping("/push/{toUserId}")
+    public ResponseEntity<String> pushToWeb(@RequestBody String message, @PathVariable String toUserId) throws IOException {
+        WebSocketServer.sendInfo(message,toUserId);
+        return ResponseEntity.ok("MSG SEND SUCCESS");
     }
 
 }
