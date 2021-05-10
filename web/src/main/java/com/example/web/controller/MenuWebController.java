@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2021/2/18
  */
 @RestController
+@RequestMapping("/menu")
 public class MenuWebController {
 
     @Autowired
@@ -25,7 +26,6 @@ public class MenuWebController {
     @Autowired
     private Gson gson;
 
-    @Permission(role = "administrator")
     @RequestMapping("/editMenu")
     public CodeResult editMenu(@RequestParam("menuId") String menuId,
                                @RequestParam("menu") String menu) {
@@ -33,14 +33,12 @@ public class MenuWebController {
         return menuWebService.updateMenu(menuId, menuDO) ? new CodeResult() : new CodeResult(JControlConstant.CODE_RESULT_ERROR, "菜单修改失败");
     }
 
-    @Permission(role = "administrator")
     @RequestMapping("/addMenu")
     public CodeResult addMenu(@Param("menu") String menu) {
         Menu menuDO = gson.fromJson(menu, Menu.class);
         return menuWebService.addMenu(menuDO) ? new CodeResult() : new CodeResult(JControlConstant.CODE_RESULT_ERROR, "添加失败");
     }
 
-    @Permission(role = "administrator")
     @RequestMapping("/deleteMenu")
     public CodeResult deleteMenu(String menuId) {
         return menuWebService.deleteMenu(menuId) ? new CodeResult() : new CodeResult(JControlConstant.CODE_RESULT_ERROR, "删除失败");

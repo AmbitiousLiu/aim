@@ -7,6 +7,26 @@ package com.example.web.DO;
 public class Role {
     String name;
 
+    String whitelist;
+
+    String blacklist;
+
+    public String getWhitelist() {
+        return whitelist;
+    }
+
+    public void setWhitelist(String whitelist) {
+        this.whitelist = whitelist;
+    }
+
+    public String getBlacklist() {
+        return blacklist;
+    }
+
+    public void setBlacklist(String blacklist) {
+        this.blacklist = blacklist;
+    }
+
     public String getName() {
         return name;
     }

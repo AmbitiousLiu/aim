@@ -2,6 +2,7 @@ package com.example.web.service;
 
 import com.example.web.DO.Role;
 import com.example.web.DO.RoleMenu;
+import com.example.web.VO.RoleMenuVO;
 import com.example.web.mapper.RoleMapper;
 import com.example.web.mapper.RoleMenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,29 +24,46 @@ public class RoleMenuWebService {
     @Autowired
     RoleMapper roleMapper;
 
-    public List<RoleMenu> getRoleMenu() {
-        return roleMenuMapper.selectList(null);
+    public List<RoleMenuVO> getRoleMenu() {
+        return roleMenuMapper.selectAllRoleMenu();
     }
 
     @Transactional
-    public boolean editRoleMenu(String roleName, RoleMenu roleMenu) {
+    public boolean editRoleMenu(String roleName, RoleMenuVO roleMenuVO) {
+        RoleMenu roleMenu = new RoleMenu(){{
+            setRoleName(roleMenuVO.getName());
+            setHave(roleMenuVO.getHave());
+            setHaveNot(roleMenuVO.getHaveNot());
+        }};
+        Role role = new Role(){{
+            setName(roleMenuVO.getName());
+            setWhitelist(roleMenuVO.getWhitelist());
+            setBlacklist(roleMenuVO.getBlacklist());
+        }};
         int a = roleMenuMapper.updateRoleMenu(roleName, roleMenu);
-        if (roleName.equals(roleMenu.getRoleName())) {
-            return a == 1;
-        }
-        int b = roleMenuMapper.updateRole(roleName, roleMenu);
+        int b = roleMapper.updateRole(roleName, role);
         return a == 1 && b == 1;
     }
 
+    @Transactional
     public boolean deleteRoleMenu(String roleName) {
-        return roleMenuMapper.deleteById(roleName) == 1;
+        int a = roleMenuMapper.deleteById(roleName);
+        int b = roleMapper.deleteOne(roleName);
+        return a == 1 && b == 1;
     }
 
     @Transactional
-    public boolean addRoleMenu(RoleMenu roleMenu) {
+    public boolean addRoleMenu(RoleMenuVO roleMenuVO) {
+        RoleMenu roleMenu = new RoleMenu(){{
+            setRoleName(roleMenuVO.getName());
+            setHave(roleMenuVO.getHave());
+            setHaveNot(roleMenuVO.getHaveNot());
+        }};
         int a = roleMenuMapper.insert(roleMenu);
         Role role = new Role(){{
-            setName(roleMenu.getRoleName());
+            setName(roleMenuVO.getName());
+            setWhitelist(roleMenuVO.getWhitelist());
+            setBlacklist(roleMenuVO.getBlacklist());
         }};
         int b = roleMapper.insert(role);
         return a == 1 && b == 1;

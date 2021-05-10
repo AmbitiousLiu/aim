@@ -1,6 +1,7 @@
 package com.example.web.controller;
 
 import com.example.web.DO.RoleMenu;
+import com.example.web.VO.RoleMenuVO;
 import com.example.web.service.RoleMenuWebService;
 import com.google.gson.Gson;
 import com.jleo.jcontrol.access.Permission;
@@ -38,14 +39,14 @@ public class RoleMenuWebController {
     @Permission(role = "administrator")
     @RequestMapping("/addRoleMenu")
     CodeResult addRoleMenu(@RequestParam("roleMenu") String roleMenu) {
-        RoleMenu roleMenu1 = gson.fromJson(roleMenu, RoleMenu.class);
+        RoleMenuVO roleMenu1 = gson.fromJson(roleMenu, RoleMenuVO.class);
         return roleMenuWebService.addRoleMenu(roleMenu1) ? new CodeResult() : new CodeResult(JControlConstant.CODE_RESULT_ERROR, "添加失败");
     }
 
     @Permission(role = "administrator")
     @RequestMapping("/editRoleMenu")
     CodeResult editRoleMenu(String roleName, String roleMenu) {
-        RoleMenu roleMenu1 = gson.fromJson(roleMenu, RoleMenu.class);
+        RoleMenuVO roleMenu1 = gson.fromJson(roleMenu, RoleMenuVO.class);
         return roleMenuWebService.editRoleMenu(roleName, roleMenu1) ? new CodeResult() : new CodeResult(JControlConstant.CODE_RESULT_ERROR, "修改失败");
     }
 
