@@ -18,13 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 public class Test {
     @Autowired
     Test2 test2;
-    @Autowired
-    Gson gson;
-    SystemController systemController = new SystemController();
-    @RequestMapping("test")
-    public String test(@RequestBody String string) {
+
+    @RequestMapping("/test")
+    public String test() {
         //System.out.println("test");
-        systemController.heartbeat(string);
         try {
             test2.get("pertest", 1);
             test2.get("pertest", 1);

@@ -1,5 +1,6 @@
 package com.example.aim.agent.bootstrap.jvm;
 
+import com.example.aim.agent.bootstrap.Bootstrap;
 import com.example.aim.agent.bootstrap.Kafka;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -89,7 +90,7 @@ public class JvmStack {
         OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
         JsonObject jsonObject = new JsonObject();
         try {
-            jsonObject.addProperty("name", InetAddress.getLocalHost().getHostName());
+            jsonObject.addProperty("name", Bootstrap.agentName + "(" + InetAddress.getLocalHost().getHostName() + ")");
         } catch (UnknownHostException e) {
             e.printStackTrace();
             jsonObject.addProperty("name", UUID.randomUUID().toString());

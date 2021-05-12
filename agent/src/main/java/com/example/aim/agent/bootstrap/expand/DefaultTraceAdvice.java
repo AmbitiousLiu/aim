@@ -1,5 +1,6 @@
 package com.example.aim.agent.bootstrap.expand;
 
+import com.example.aim.agent.bootstrap.Bootstrap;
 import com.example.aim.agent.bootstrap.trace.MethodObject;
 import com.example.aim.agent.bootstrap.trace.TraceContext;
 import net.bytebuddy.agent.builder.AgentBuilder;
@@ -30,7 +31,7 @@ public class DefaultTraceAdvice implements ExpandAgent {
 
         new AgentBuilder
                 .Default()
-                .type(ElementMatchers.nameStartsWith("com.example.demo.controller")) // 指定需要拦截的类
+                .type(ElementMatchers.nameStartsWith(Bootstrap.agentPath)) // 指定需要拦截的类
                 .transform(transformer)
                 .installOn(instrumentation);
     }
