@@ -9,10 +9,12 @@ import java.net.UnknownHostException;
  * @date 2021/2/3
  */
 @Component
-public class Test2 {
+public class Service {
     public void get(String name, int i) throws Exception {
-        //long var3 = System.nanoTime();
-        //System.out.println(name);
-        //throw new Exception("my exception");
+        throw new Exception("my exception");
+    }
+
+    public void get2(String name) {
+        System.out.println(name);
     }
 }

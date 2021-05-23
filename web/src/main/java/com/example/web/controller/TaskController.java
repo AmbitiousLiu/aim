@@ -63,7 +63,6 @@ public class TaskController {
 
     @RequestMapping("/addTask")
     public CodeResult addTask(Task task, HttpServletRequest request) {
-
         return taskMapper.insert(task) == 1 ? new CodeResult("添加成功！") : new CodeResult(JControlConstant.CODE_RESULT_ERROR, "添加失败！");
     }
 
